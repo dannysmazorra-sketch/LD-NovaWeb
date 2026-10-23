@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LD NOVA - Soluciones Tecnológicas & Software</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #070913;
+            --bg-card: rgba(18, 24, 43, 0.7);
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --accent: #06b6d4;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --admin-bg: #1e1b4b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Ambient background glow */
+        .glow-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 60%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+        }
+
+        /* Header / Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(7, 9, 19, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--text-main);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .lang-btn, .admin-toggle-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .lang-btn:hover, .admin-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 5% 100px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #ffffff, #a5f3fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 20px var(--primary-glow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Section Layouts */
+        section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Portfolio */
+        .portfolio-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        /* Admin Controls */
+        .admin-panel {
+            display: none;
+            background: var(--admin-bg);
+            border: 1px dashed var(--primary);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+        }
+
+        .admin-form input, .admin-form textarea {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        .admin-form button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        .admin-mode .delete-btn {
+            display: inline-block;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 5%;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.3rem; }
+            nav ul { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo-container">
+            <div class="logo-badge">LD</div>
+            <span>NOVA</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
+                <li><a href="#portafolio" data-i18n="nav.portfolio">Portafolio</a></li>
+                <li><a href="#fundadores" data-i18n="nav.founders">Fundadores</a></li>
+                <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="nav-actions">
+            <button class="lang-btn" onclick="toggleLanguage()"><i class="fa-solid font-globe"></i> <span id="lang-label">EN</span></button>
+            <button class="admin-toggle-btn" onclick="toggleAdminPanel()"><i class="fa-solid fa-lock"></i> Admin</button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge" data-i18n="hero.badge">Soluciones de Software de Alto Nivel</div>
+        <h1 data-i18n="hero.title">Transformamos ideas en productos digitales excepcionales</h1>
+        <p data-i18n="hero.subtitle">Desarrollo a medida, arquitectura escalable y diseño enfocado en la experiencia de usuario para impulsar tu negocio.</p>
+        <a href="#contacto" class="cta-btn" data-i18n="hero.cta">Iniciar Proyecto</a>
+    </section>
+
+    <!-- Panel Administrador (Gestión de Contenido) -->
+    <section>
+        <div id="adminPanel" class="admin-panel">
+            <h3><i class="fa-solid fa-sliders"></i> Panel de Administración (Agregar Contenido)</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">Añade nuevos elementos a las secciones de Servicios o Portafolio en tiempo real.</p>
+            <form class="admin-form" onsubmit="addContent(event)">
+                <select id="adminSection" style="background: rgba(0,0,0,0.3); color:#fff; padding:10px; border-radius:8px; border:1px solid var(--border-color)">
+                    <option value="servicios">Servicios</option>
+                    <option value="portafolio">Portafolio</option>
+                </select>
+                <input type="text" id="adminTitle" placeholder="Título" required>
+                <input type="text" id="adminCategory" placeholder="Categoría o Icono FontAwesome (ej. fa-code)">
+                <textarea id="adminDesc" placeholder="Descripción" rows="3" required></textarea>
+                <button type="submit">Publicar Contenido</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Servicios -->
+    <section id="servicios">
+        <div class="section-header">
+            <h2 data-i18n="services.title">Nuestros Servicios</h2>
+            <p data-i18n="services.subtitle">Diseñamos e implementamos soluciones digitales completas.</p>
+        </div>
+        <div class="grid-3" id="servicesGrid">
+            <div class="card">
+                <button class="delete-btn" onclick="removeItem(this)"><i class="fa-solid fa-trash"></i></button>
+                <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+                <h3 data-i18n="service1.title">Desarrollo Web Personalizado</h3>
+                <p data-i18n="service1.desc">Creación de aplicaciones web modernas, rápidas y totalmente adaptadas a las necesidades específicas de tu empresa.</p>
+            </div>
+            <div class="card">
+                <button class="delete-btn" onclick="removeItem(this)"><i class="fa-solid fa-trash"></i></button>
+                <div class="card-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <h3 data-i18n="service2.title">Aplicaciones Móviles</h3>
+                <p data-i18n="service2.desc">Desarrollo iOS y Android nativo y multiplataforma con interfaces intuitivas y rendimiento fluido.</p>
+            </div>
+            <div class="card">
+                <button class="delete-btn" onclick="removeItem(this)"><i class="fa-solid fa-trash"></i></button>
+                <div class="card-icon"><i class="fa-solid fa-cloud"></i></div>
+                <h3 data-i18n="service3.title">Arquitectura Cloud</h3>
+                <p data-i18n="service3.desc">Infraestructuras seguras y escalables en la nube preparadas para soportar el crecimiento de tu negocio.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portafolio -->
+    <section id="portafolio">
+        <div class="section-header">
+            <h2 data-i18n="portfolio.title">Portafolio de Proyectos</h2>
+            <p data-i18n="portfolio.subtitle">Algunos de nuestros trabajos destacados.</p>
+        </div>
+        <div class="grid-3" id="portfolioGrid">
+            <div class="card">
+                <button class="delete-btn" onclick="removeItem(this)"><i class="fa-solid fa-trash"></i></button>
+                <span class="portfolio-tag">SaaS / Cloud</span>
+                <h3>Plataforma Analytics</h3>
+                <p>Dashboard en tiempo real para análisis de métricas y gestión de grandes volúmenes de datos corporativos.</p>
+            </div>
+            <div class="card">
+                <button class="delete-btn" onclick="removeItem(this)"><i class="fa-solid fa-trash"></i></button>
+                <span class="portfolio-tag">E-Commerce</span>
+                <h3>Global Marketplace</h3>
+                <p>E-commerce con integración de múltiples pasarelas de pago y gestión automatizada de inventarios.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fundadores -->
+    <section id="fundadores">
+        <div class="section-header">
+            <h2 data-i18n="founders.title">Fundadores</h2>
+            <p data-i18n="founders.subtitle">Liderazgo técnico y pasión por el software.</p>
+        </div>
+        <div class="grid-3">
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 20px;"><i class="fa-solid fa-user-astronaut"></i></div>
+                <h3>Líder Técnico</h3>
+                <p style="color: var(--primary); font-weight: 600; font-size: 0.85rem; margin-bottom: 10px;">Co-Fundador</p>
+                <p>Especialista en arquitectura de software escalable y desarrollo de sistemas de alto rendimiento.</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 20px;"><i class="fa-solid fa-compass-drafting"></i></div>
+                <h3>Líder de Producto</h3>
+                <p style="color: var(--accent); font-weight: 600; font-size: 0.85rem; margin-bottom: 10px;">Co-Fundador</p>
+                <p>Enfocado en la estrategia de producto, experiencia de usuario y optimización de procesos de negocio.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 LD NOVA. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Lógica JS Integrada -->
+    <script>
+        // Traducciones
+        const translations = {
+            es: {
+                "nav.services": "Servicios",
+                "nav.portfolio": "Portafolio",
+                "nav.founders": "Fundadores",
+                "nav.contact": "Contacto",
+                "hero.badge": "Soluciones de Software de Alto Nivel",
+                "hero.title": "Transformamos ideas en productos digitales excepcionales",
+                "hero.subtitle": "Desarrollo a medida, arquitectura escalable y diseño enfocado en la experiencia de usuario para impulsar tu negocio.",
+                "hero.cta": "Iniciar Proyecto",
+                "services.title": "Nuestros Servicios",
+                "services.subtitle": "Diseñamos e implementamos soluciones digitales completas.",
+                "portfolio.title": "Portafolio de Proyectos",
+                "portfolio.subtitle": "Algunos de nuestros trabajos destacados.",
+                "founders.title": "Fundadores",
+                "founders.subtitle": "Liderazgo técnico y pasión por el software."
+            },
+            en: {
+                "nav.services": "Services",
+                "nav.portfolio": "Portfolio",
+                "nav.founders": "Founders",
+                "nav.contact": "Contact",
+                "hero.badge": "High-End Software Solutions",
+                "hero.title": "We transform ideas into exceptional digital products",
+                "hero.subtitle": "Custom development, scalable architecture, and UX-focused design to power your business.",
+                "hero.cta": "Start Project",
+                "services.title": "Our Services",
+                "services.subtitle": "We design and implement end-to-end digital solutions.",
+                "portfolio.title": "Project Portfolio",
+                "portfolio.subtitle": "Some of our highlighted work.",
+                "founders.title": "Founders",
+                "founders.subtitle": "Technical leadership and passion for software."
+            }
+        };
+
+        let currentLang = 'es';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            document.getElementById('lang-label').innerText = currentLang === 'es' ? 'EN' : 'ES';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+        }
+
+        // Modo Administrador
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('active');
+            document.body.classList.toggle('admin-mode');
+        }
+
+        function addContent(e) {
+            e.preventDefault();
+            const section = document.getElementById('adminSection').value;
+            const title = document.getElementById('adminTitle').value;
+            const category = document.getElementById('adminCategory').value || 'fa-code';
+            const desc = document.getElementById('adminDesc').value;
+
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            if (section === 'servicios') {
+                card.innerHTML = `
+                    <button class="delete-btn" onclick="removeItem(this)"><i class="fa-solid fa-trash"></i></button>
+                    <div class="card-icon"><i class="fa-solid ${category}"></i></div>
+                    <h3>${title}</h3>
+                    <p>${desc}</p>
+                `;
+                document.getElementById('servicesGrid').appendChild(card);
+            } else {
+                card.innerHTML = `
+                    <button class="delete-btn" onclick="removeItem(this)"><i class="fa-solid fa-trash"></i></button>
+                    <span class="portfolio-tag">${category}</span>
+                    <h3>${title}</h3>
+                    <p>${desc}</p>
+                `;
+                document.getElementById('portfolioGrid').appendChild(card);
+            }
+
+            // Limpiar formulario
+            document.getElementById('adminTitle').value = '';
+            document.getElementById('adminCategory').value = '';
+            document.getElementById('adminDesc').value = '';
+        }
+
+        function removeItem(btn) {
+            btn.parentElement.remove();
+        }
+    </script>
+</body>
+</html>
